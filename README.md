@@ -1,5 +1,10 @@
 
-# Spring Boot JWT Authentication & Authorization Template
+# Spring Boot Logging with Grafana and Loki
+
+Just run:
+```
+docker-compose up -d
+```
 
 This is a starter Spring Boot project template for building secure backend services using JWT (JSON Web Tokens) for authentication and authorization. It includes:
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+<springProperty name="name" source="spring.application.name" />
+
+<!-- 1. Keep DEFAULT CONSOLE output (Spring Boot style) -->
+<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+<include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+
+<appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
+    <!-- (1) -->
+    <http>
+        <url>http://localhost:3100/loki/api/v1/push</url>
+    </http>
+    <format>
+        <!-- (2) -->
+        <label>
+            <pattern>app=${name},host=${HOSTNAME},level=%level</pattern>
+            <!-- (3) -->
+            <readMarkers>true</readMarkers>
+        </label>
+        <message>
+            <!-- (4) -->
+            <pattern>
+                {
+                "timestamp": "%date{yyyy-MM-dd'T'HH:mm:ss.SSSZ}",
+                "level":"%level",
+                "class":"%logger{36}",
+                "thread":"%thread",
+                "message": "%message",
+                "requestId": "%X{X-Request-ID}"
+                }
+            </pattern>
+        </message>
+    </format>
+</appender>
+
+<root level="INFO">
+    <appender-ref ref="CONSOLE" />
+    <appender-ref ref="LOKI" />
+</root>
+
+</configuration>
