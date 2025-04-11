@@ -30,7 +30,7 @@
                 "message": "%message"
                 "requestId": "%X{requestId}",
                 "method":"%X{method}",
-                "api":"%X{api}",
+                "api":"%X{api:-N/A}",
                 "status": "%X{status:-none}",
                 "ip": "%X{ipAddress:-none}",
                 }
