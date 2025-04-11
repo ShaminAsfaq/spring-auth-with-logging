@@ -9,6 +9,8 @@ import com.example.auth.model.entity.UserEntity;
 import com.example.auth.model.mapper.UserMapper;
 import com.example.auth.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
@@ -29,9 +31,12 @@ public class UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
 
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
 
     public TokenResponseDTO login(LoginDTO loginDTO) {
         try {
+            logger.info("Login service called");
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getUsername(), loginDTO.getPassword())
             );
@@ -43,6 +48,7 @@ public class UserService {
                     userDetails.getAuthorities() // Include roles/authorities
             );
 
+            logger.info("Successful login for user: {}", loginDTO.getUsername());
             return TokenResponseDTO
                     .builder()
                     .tokenType("Bearer")
@@ -50,8 +56,10 @@ public class UserService {
                     .expiresIn(jwtUtil.getExpirationTime())
                     .build();
         } catch (BadCredentialsException e) {
+            logger.error("Failed login for user: {}", loginDTO.getUsername());
             throw new BadCredentialsException("Invalid username or password");
         } catch (InternalAuthenticationServiceException e) {
+            logger.error("An error occurred during login: {}", e.getMessage());
             throw new InternalAuthenticationServiceException("An error occurred during login");
         }
     }
