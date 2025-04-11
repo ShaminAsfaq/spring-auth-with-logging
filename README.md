@@ -1,6 +1,8 @@
 
 # Spring Boot Logging with Grafana and Loki
 
+Tutorial: https://piotrminkowski.com/2023/07/05/logging-in-spring-boot-with-loki/
+
 Just run:
 ```
 docker-compose up -d

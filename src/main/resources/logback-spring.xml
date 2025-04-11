@@ -27,8 +27,12 @@
                 "level":"%level",
                 "class":"%logger{36}",
                 "thread":"%thread",
-                "message": "%message",
-                "requestId": "%X{X-Request-ID}"
+                "message": "%message"
+                "requestId": "%X{requestId}",
+                "method":"%X{method}",
+                "api":"%X{api}",
+                "status": "%X{status:-none}",
+                "ip": "%X{ipAddress:-none}",
                 }
             </pattern>
         </message>

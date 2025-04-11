@@ -5,6 +5,7 @@ import com.example.auth.model.dto.UserDTO;
 import com.example.auth.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
     private final UserService userService;
 
@@ -31,9 +33,6 @@ public class AuthController {
     // Login endpoint
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid LoginDTO loginDTO) {
-        logger.info("This is an INFO level message");
-        logger.debug("This is a DEBUG level message");
-        logger.error("This is an ERROR level message");
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.login(loginDTO));
     }
 }
