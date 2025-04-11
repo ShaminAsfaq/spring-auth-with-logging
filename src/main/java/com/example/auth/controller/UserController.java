@@ -22,7 +22,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/list")
-    public ResponseEntity<List<UserDTO>> updatePassword() {
+    public ResponseEntity<List<UserDTO>> getUserList() {
         return ResponseEntity.status(HttpStatus.OK).body(userService.getUserList());
     }
 }
