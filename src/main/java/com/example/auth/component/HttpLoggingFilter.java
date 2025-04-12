@@ -26,11 +26,6 @@ public class HttpLoggingFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         String path = httpRequest.getRequestURI();
 
-        // Skip logging for /actuator/prometheus
-        if (path.contains("/actuator/prometheus") || path.contains("/actuator/health")) {
-            //  Skipping LOG data for this URL
-            return;
-        }
 
         // Get the HTTP method (e.g., GET, POST)
         String method = httpRequest.getMethod();
